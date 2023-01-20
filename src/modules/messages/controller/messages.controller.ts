@@ -1,10 +1,13 @@
 import { JwtAuthGuard } from "@modules/auth/guards/jwt-auth.guard";
 import { UsersService } from "@modules/users/services/users.service";
 import { Controller, Get, UseGuards, Request, Body, NotAcceptableException } from "@nestjs/common";
+import { EventEmitter2 } from "@nestjs/event-emitter";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
+
 import { sendMessageDTO } from "../dto/send-message.dto";
 import { MessageEntity } from "../entities/messages.model";
 import { MessagesService } from "../services/messages.service";
+import { NewMessageEvent } from "@modules/notifications/events/new-message.event";
 
 @Controller('messages')
 @ApiTags('Messages')
@@ -12,7 +15,8 @@ import { MessagesService } from "../services/messages.service";
 export class MessagesController {
   constructor(
     private readonly usersService: UsersService,
-    private readonly messagesService: MessagesService
+    private readonly messagesService: MessagesService,
+    private eventEmitter: EventEmitter2
   ) { }
 
   @Get('/getMessages')
@@ -42,6 +46,13 @@ export class MessagesController {
     }
 
     this.messagesService.createMessage(message);
+    
+    const newMessageEvent = new NewMessageEvent({
+      userId: toUser.id,
+      message: newMessage.message
+    })
+ 
+    this.eventEmitter.emit('message.new', newMessageEvent)
     
     return {
       message: 'sent!'

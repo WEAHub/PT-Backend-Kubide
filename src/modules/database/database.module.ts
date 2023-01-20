@@ -3,6 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserEntity } from "../users/entities/user.model";
 import { MessageEntity } from "@modules/messages/entities/messages.model";
+import { NotificationEntity } from "@modules/notifications/entities/notifications.model";
 
 @Module({
 	imports: [
@@ -18,7 +19,8 @@ import { MessageEntity } from "@modules/messages/entities/messages.model";
 				database: config.get<string>('DATABASE_DBNAME'),
 				entities: [
 					UserEntity,
-					MessageEntity
+					MessageEntity,
+					NotificationEntity
 				],
 				synchronize: false
 			})

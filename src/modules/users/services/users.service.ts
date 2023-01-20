@@ -7,12 +7,12 @@ import { Repository } from "typeorm";
 import { UserEntity } from "../entities/user.model";
 
 // Interfaces
-import { IUserSession, IUserToken } from "@modules/auth/interfaces/user-session.interface";
-import { IUserModifiedMessage } from "../interfaces/user.interface";
+import { IUserToken } from "@modules/auth/interfaces/user-session.interface";
 
 // DTO's
 import { CreateUserDto } from "../dto/create-user.dto";
 import { userStatusDto, userUpdateDataDto } from "../dto/update-user.dto";
+import { IApiMessage } from "@modules/shared/interfaces/IApiMessages.interface";
 
 
 @Injectable()
@@ -25,7 +25,7 @@ export class UsersService {
   { }
 
   async findAll(): Promise<UserEntity[]> {
-    return this.usersRepository.find({ select: ["username", "isOnline"] });
+    return this.usersRepository.find({ select: ["username", "isOnline"] }); 
   }
   
   async findOneByEmail(email: string): Promise<UserEntity> {
@@ -64,7 +64,7 @@ export class UsersService {
     await this.usersRepository.delete({id: userToken.userId});
   }
 
-  async updateUser(userToken: IUserToken, newUserData: userUpdateDataDto) {
+  async updateUser(userToken: IUserToken, newUserData: userUpdateDataDto): Promise<IApiMessage> {
     const user = await this.usersRepository.findOneBy({ id: userToken.userId })
 
     if(newUserData.email !== user.email) {
@@ -89,7 +89,7 @@ export class UsersService {
 
   }
 
-  async setUserStatus(userToken: IUserToken, status: userStatusDto): Promise<IUserModifiedMessage> {
+  async setUserStatus(userToken: IUserToken, status: userStatusDto): Promise<IApiMessage> {
     const user = await this.usersRepository.findOneBy({ id: userToken.userId })
 
     this.usersRepository.merge(user, {
@@ -104,7 +104,7 @@ export class UsersService {
 
   }
 
-  async changeUserPassword(userToken: IUserToken, password: string) {
+  async changeUserPassword(userToken: IUserToken, password: string): Promise<IApiMessage>  {
     const user = await this.usersRepository.findOneBy({ id: userToken.userId })
 
     this.usersRepository.merge(user, {

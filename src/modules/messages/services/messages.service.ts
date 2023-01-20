@@ -1,4 +1,5 @@
 import { IUserToken } from "@modules/auth/interfaces/user-session.interface";
+import { IApiMessage } from "@modules/shared/interfaces/IApiMessages.interface";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -19,7 +20,7 @@ export class MessagesService {
     })
   }
 
-  async createMessage(message: MessageEntity) {
+  async createMessage(message: MessageEntity): Promise<IApiMessage> {
     this.msgRepository.save(message)
     return {
       message: 'Success'
