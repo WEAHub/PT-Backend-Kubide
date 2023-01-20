@@ -10,7 +10,7 @@ class sendMessageDTO {
 
 	@IsNotEmpty()
 	@IsString()
-  @ApiProperty({ description: 'Content of the message', example: 'test@test.com' })
+  @ApiProperty({ description: 'Content of the message', example: 'testing message' })
   message: string;
   
 }

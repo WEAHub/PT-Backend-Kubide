@@ -2,6 +2,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { IUserToken } from '../interfaces/user-session.interface';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -18,8 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  // Aqui falta añadir un tipado al payload
-  async validate(payload: any): Promise<any> {
+  async validate(payload: IUserToken): Promise<IUserToken> {
     return payload;
   }
 }

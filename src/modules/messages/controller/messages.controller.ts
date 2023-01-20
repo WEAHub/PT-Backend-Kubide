@@ -1,6 +1,6 @@
 import { JwtAuthGuard } from "@modules/auth/guards/jwt-auth.guard";
 import { UsersService } from "@modules/users/services/users.service";
-import { Controller, Get, UseGuards, Request, Body, NotAcceptableException } from "@nestjs/common";
+import { Controller, Get, UseGuards, Request, Body, NotAcceptableException, Post } from "@nestjs/common";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 
@@ -25,7 +25,7 @@ export class MessagesController {
     return this.messagesService.getUserMessages(req.user)
   }
 
-  @Get('/sendMessage')
+  @Post('/sendMessage')
   @ApiOperation({ summary: 'Send message to user'})
   async sendMessage(@Request() req, @Body() newMessage: sendMessageDTO) {
     const toUser = await this.usersService.findOneByEmail(newMessage.toUser)
@@ -53,7 +53,7 @@ export class MessagesController {
     })
  
     this.eventEmitter.emit('message.new', newMessageEvent)
-    
+
     return {
       message: 'sent!'
     }
