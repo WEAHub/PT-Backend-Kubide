@@ -1,7 +1,7 @@
+import { JwtAuthGuard } from "@modules/auth/guards/jwt-auth.guard";
 import { AuthService } from "@modules/auth/services/auth.service";
 import { Body, NotAcceptableException, Patch, Request } from "@nestjs/common";
 import { Controller, Get, UseGuards } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { compare } from "bcrypt";
 import { userChangePasswordDto, userStatusDto, userUpdateDataDto } from "../dto/update-user.dto";
@@ -9,7 +9,7 @@ import { UsersService } from "../services/users.service";
 
 @Controller('users')
 @ApiTags('User')
-@UseGuards(AuthGuard('jwt'))
+@UseGuards(JwtAuthGuard)
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,

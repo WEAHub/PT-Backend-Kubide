@@ -20,7 +20,6 @@ class userUpdateDataDto {
   email: string
 }
 
-
 class userChangePasswordDto {
 	@IsNotEmpty()
 	@IsString()
