@@ -1,11 +1,12 @@
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <a href="http://kubide.io/" target="blank"> <img src="https://kubide.es/wp-content/uploads/2016/06/logotipo-blanco-300.png" width="200" alt="Nest Logo" /></a>
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+  <p align="center">Prueba tecnica desarrollada en <a href="http://nodejs.org" target="_blank">Node.js</a>, <a href="https://nestjs.com/" target="_blank">NestJS</a> y <a href="https://mysql.com/" target="_blank">MySQL</a></p>
     <p align="center">
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
 <a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
@@ -19,20 +20,32 @@
     <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
   <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Autentificación
+ - `POST` /auth/login
+ - `POST` /auth/signup
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Usuarios
+- `GET` /users/activeUsers
+- `GET` /users/getUserInfo
+- `PATCH` /users/setStatus
+- `PATCH` /users/updateUser
+- `PATCH` /users/changePassword
 
-## Installation
+## Mensajes
+- `GET` /messages/getMessages
+- `POST` /messages/sendMessage
+
+## Notificaciones
+- `GET` /notifications/getNotifications
+
+## Instalación
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+## Ejecutando el app
 
 ```bash
 # development
@@ -45,29 +58,6 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
+## Soporte
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
