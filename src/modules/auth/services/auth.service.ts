@@ -38,11 +38,7 @@ export class AuthService {
     return {
       username: user.username,
       email: user.email,
-      token: this.generateToken({
-        username: user.username,
-        email: user.email,
-        userId: user.id
-      })
+      token: this.generateToken(user)
     };
   }
 
@@ -59,16 +55,16 @@ export class AuthService {
     return {
       username: newUser.username,
       email: newUser.email,
-      token: this.generateToken({
-        username: newUser.username,
-        userId: newUser.id,
-        email: user.email,
-      })
+      token: this.generateToken(newUser)
     };
   } 
     
-  generateToken(userData: IUserToken): string {
-    return this.jwtService.sign(userData)
+  generateToken(user: UserEntity): string {
+    return this.jwtService.sign({
+      username: user.username,
+      userId: user.id,
+      email: user.email,
+    })
   }
 
   async hashPassword(password: string): Promise<string> {

@@ -1,6 +1,6 @@
+import { JwtAuthGuard } from "@modules/auth/guards/jwt-auth.guard";
 import { UsersService } from "@modules/users/services/users.service";
 import { Controller, Get, UseGuards, Request, Body, NotAcceptableException } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { sendMessageDTO } from "../dto/send-message.dto";
 import { MessageEntity } from "../entities/messages.model";
@@ -8,7 +8,7 @@ import { MessagesService } from "../services/messages.service";
 
 @Controller('messages')
 @ApiTags('Messages')
-@UseGuards(AuthGuard('jwt'))
+@UseGuards(JwtAuthGuard)
 export class MessagesController {
   constructor(
     private readonly usersService: UsersService,
@@ -26,6 +26,9 @@ export class MessagesController {
   async sendMessage(@Request() req, @Body() newMessage: sendMessageDTO) {
     const toUser = await this.usersService.findOneByEmail(newMessage.toUser)
 
+    if(!toUser) {
+      throw new NotAcceptableException(`This user doesn't exists.`);
+    }
 
     if(!toUser.isOnline) {
       throw new NotAcceptableException(`The user (${newMessage.toUser}) is not Online.`);
@@ -40,6 +43,9 @@ export class MessagesController {
 
     this.messagesService.createMessage(message);
     
+    return {
+      message: 'sent!'
+    }
   }
 
 }

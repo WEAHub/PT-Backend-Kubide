@@ -89,11 +89,6 @@ export class UsersService {
 
   }
 
-  async getActiveUsers(): Promise<string[]> {
-    const activeUsers = await this.usersRepository.findBy({ isOnline: true })
-    return activeUsers.map(user => user.username)
-  }
-
   async setUserStatus(userToken: IUserToken, status: userStatusDto): Promise<IUserModifiedMessage> {
     const user = await this.usersRepository.findOneBy({ id: userToken.userId })
 
@@ -121,6 +116,14 @@ export class UsersService {
     return {
       message: 'success'
     }
+  }
+
+  async getActiveUsers(): Promise<any[]> {
+    const activeUsers = await this.usersRepository.findBy({ isOnline: true })
+    return activeUsers.map(user => {
+      const { username, email } = user
+      return { username, email }
+    })
   }
 
 }

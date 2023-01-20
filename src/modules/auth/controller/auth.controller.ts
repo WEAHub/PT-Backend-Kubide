@@ -4,6 +4,7 @@ import { AuthGuard } from '@nestjs/passport';
 
 import { AuthService } from '../services/auth.service';
 import { LoginDto, SignupDto } from '../dto/auth.dto';
+import { LocalAuthGuard } from '../guards/local.guard';
 
 
 @Controller("auth")
@@ -14,7 +15,7 @@ export class AuthController {
   ) { }
 
 
-  @UseGuards(AuthGuard('local'))
+  @UseGuards(LocalAuthGuard)
   @Post('/login')
   @ApiOperation({ summary: 'User Login'})
   async login(@Request() req, @Body() loginData: LoginDto) {
