@@ -2,7 +2,7 @@ import { JwtAuthGuard } from "@modules/auth/guards/jwt-auth.guard";
 import { UsersService } from "@modules/users/services/users.service";
 import { Controller, Get, UseGuards, Request, Body, NotAcceptableException, Post } from "@nestjs/common";
 import { EventEmitter2 } from "@nestjs/event-emitter";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 
 import { sendMessageDTO } from "../dto/send-message.dto";
 import { MessageEntity } from "../entities/messages.model";
@@ -11,6 +11,7 @@ import { NewMessageEvent } from "@modules/notifications/events/new-message.event
 
 @Controller('messages')
 @ApiTags('Messages')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class MessagesController {
   constructor(
