@@ -4,31 +4,57 @@ import { IsBoolean, IsNotEmpty, IsString } from "class-validator"
 class userStatusDto {
 	@IsNotEmpty()
 	@IsBoolean()
-  @ApiProperty({ description: 'Online status of the user', example: 'false', type: Boolean})
+  @ApiProperty({ 
+    description: 
+    'Online status of the user', 
+    example: 'false', 
+    type: Boolean,
+    required: true
+  })
   isOnline: boolean
 }
 
 class userUpdateDataDto {
 	@IsNotEmpty()
 	@IsString()
-  @ApiProperty({ description: 'Name of the user', example: 'Manolo', type: String })
+  @ApiProperty({
+    description: 'Name of the user',
+    example: 'Manolo',
+    type: String,
+    required: true
+  })
   username: string
 
 	@IsNotEmpty()
 	@IsString()
-  @ApiProperty({ description: 'Email of the user', example: 'example@gmail.es', type: String})
+  @ApiProperty({ 
+    description: 'Email of the user', 
+    example: 'example@gmail.es', 
+    type: String,
+    required: true
+  })
   email: string
 }
 
 class userChangePasswordDto {
 	@IsNotEmpty()
 	@IsString()
-  @ApiProperty({ description: 'Old password', example: '12345', type: String })
+  @ApiProperty({ 
+    description: 'Old password', 
+    example: '12345', 
+    type: String,
+    required: true
+  })
   oldPassword: string
 
   @IsNotEmpty()
   @IsString()
-  @ApiProperty({ description: 'New password', example: '54321', type: String })
+  @ApiProperty({ 
+    description: 'New password', 
+    example: '54321', 
+    type: String,
+    required: true 
+  })
   newPassword: string
 
 }
