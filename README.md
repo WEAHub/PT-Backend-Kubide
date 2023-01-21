@@ -34,7 +34,7 @@
 - `GET` /users/getUserInfo
 - `PATCH` /users/setStatus
 - `PATCH` /users/updateUser
-- `PATCH` /users/changePassword
+- `PUT` /users/changePassword
 
 ## Mensajes
 - `GET` /messages/getMessages
