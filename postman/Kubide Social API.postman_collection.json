@@ -1,0 +1,381 @@
+{
+	"info": {
+		"_postman_id": "88b2bc20-21b2-4c4c-b9dd-65bf178fd8e0",
+		"name": "Kubide Social API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22989831"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"guest@kubide.io\",\r\n  \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{API_HOST}}:{{API_PORT}}/auth/login",
+							"protocol": "http",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"port": "{{API_PORT}}",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"Guest\",\r\n  \"email\": \"guest@kubide.io\",\r\n  \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{API_HOST}}:{{API_PORT}}/auth/signup",
+							"protocol": "http",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"port": "{{API_PORT}}",
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post-Auth",
+			"item": [
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Get Active Users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{API_HOST}}:{{API_PORT}}/users/activeUsers",
+									"protocol": "http",
+									"host": [
+										"{{API_HOST}}"
+									],
+									"port": "{{API_PORT}}",
+									"path": [
+										"users",
+										"activeUsers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User Info",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{API_HOST}}:{{API_PORT}}/users/getUserInfo",
+									"protocol": "http",
+									"host": [
+										"{{API_HOST}}"
+									],
+									"port": "{{API_PORT}}",
+									"path": [
+										"users",
+										"getUserInfo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Set User Status",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \"isOnline\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{API_HOST}}:{{API_PORT}}/users/setStatus",
+									"protocol": "http",
+									"host": [
+										"{{API_HOST}}"
+									],
+									"port": "{{API_PORT}}",
+									"path": [
+										"users",
+										"setStatus"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User Information",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \"isOnline\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{API_HOST}}:{{API_PORT}}/users/updateUser",
+									"protocol": "http",
+									"host": [
+										"{{API_HOST}}"
+									],
+									"port": "{{API_PORT}}",
+									"path": [
+										"users",
+										"updateUser"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Change User Password",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \"oldPassword\": \"123\",\r\n \"newPassword\": \"1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{API_HOST}}:{{API_PORT}}/users/changePassword",
+									"protocol": "http",
+									"host": [
+										"{{API_HOST}}"
+									],
+									"port": "{{API_PORT}}",
+									"path": [
+										"users",
+										"changePassword"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Messages",
+					"item": [
+						{
+							"name": "Get Inbox Messages",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \"oldPassword\": \"123\",\r\n \"newPassword\": \"1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{API_HOST}}:{{API_PORT}}/messages/getMessages/INBOX",
+									"protocol": "http",
+									"host": [
+										"{{API_HOST}}"
+									],
+									"port": "{{API_PORT}}",
+									"path": [
+										"messages",
+										"getMessages",
+										"INBOX"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Outbox Messages",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \"oldPassword\": \"123\",\r\n \"newPassword\": \"1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{API_HOST}}:{{API_PORT}}/messages/getMessages/OUTBOX",
+									"protocol": "http",
+									"host": [
+										"{{API_HOST}}"
+									],
+									"port": "{{API_PORT}}",
+									"path": [
+										"messages",
+										"getMessages",
+										"OUTBOX"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Send Message",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \"oldPassword\": \"123\",\r\n \"newPassword\": \"1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{API_HOST}}:{{API_PORT}}/messages/getMessages/OUTBOX",
+									"protocol": "http",
+									"host": [
+										"{{API_HOST}}"
+									],
+									"port": "{{API_PORT}}",
+									"path": [
+										"messages",
+										"getMessages",
+										"OUTBOX"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Notifications",
+					"item": [
+						{
+							"name": "Get Notifications",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \"oldPassword\": \"123\",\r\n \"newPassword\": \"1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{API_HOST}}:{{API_PORT}}/notifications/getNotifications",
+									"protocol": "http",
+									"host": [
+										"{{API_HOST}}"
+									],
+									"port": "{{API_PORT}}",
+									"path": [
+										"notifications",
+										"getNotifications"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikd1ZXN0IiwidXNlcklkIjo2LCJlbWFpbCI6Imd1ZXN0QGt1YmlkZS5pbyIsImlhdCI6MTY3NDI5OTQzMywiZXhwIjoxNjc0Mzg1ODMzfQ.SiNsCMZLx_UuLFdL80RRMqsG2MynZ_OT2BK8V3scTlc",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
