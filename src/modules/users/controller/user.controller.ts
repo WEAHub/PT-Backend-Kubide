@@ -1,6 +1,7 @@
 import { JwtAuthGuard } from "@modules/auth/guards/jwt-auth.guard";
 import { AuthService } from "@modules/auth/services/auth.service";
 import { Body, NotAcceptableException, Patch, Request } from "@nestjs/common";
+import { Put } from "@nestjs/common";
 import { Controller, Get, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { compare } from "bcrypt";
@@ -41,7 +42,7 @@ export class UsersController {
     return this.usersService.findOneById(req.user.userId)
   }
 
-  @Patch('/changePassword')
+  @Put('/changePassword')
   @ApiOperation({ summary: 'Change user password'})
   async changePassword(@Request() req, @Body() userChangePassword: userChangePasswordDto) {
 

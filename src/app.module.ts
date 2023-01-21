@@ -12,7 +12,7 @@ import { Modules } from './modules';
     EventEmitterModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: 'config.env'
+      envFilePath: '.env'
     }),
     Modules
   ],

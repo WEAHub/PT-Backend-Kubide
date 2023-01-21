@@ -17,17 +17,15 @@ import { NotificationEntity } from "@modules/notifications/entities/notification
 				username: config.get<string>('DATABASE_USER'),
 				password: config.get<string>('DATABASE_PASSWORD'),
 				database: config.get<string>('DATABASE_DBNAME'),
+				synchronize: true,
 				entities: [
 					UserEntity,
 					MessageEntity,
 					NotificationEntity
-				],
-				synchronize: false
+				]
 			})
 		})
 	]
 })
-
-export class DatabaseModule {
-
-}
+ 
+export class DatabaseModule { }
