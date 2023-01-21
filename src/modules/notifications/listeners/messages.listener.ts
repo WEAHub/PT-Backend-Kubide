@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { OnEvent } from "@nestjs/event-emitter";
 import { NewMessageEvent } from "../events/new-message.event";
-import { NotificationsService } from "../services/messages.service";
+import { NotificationsService } from "../services/notifications.service";
 
 @Injectable()
 class MessageListener {

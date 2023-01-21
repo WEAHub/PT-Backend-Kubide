@@ -1,7 +1,7 @@
 import { JwtAuthGuard } from "@modules/auth/guards/jwt-auth.guard";
 import { Controller, Get, UseGuards, Request, Body, NotAcceptableException } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
-import { NotificationsService } from "../services/messages.service";
+import { NotificationsService } from "../services/notifications.service";
 
 @Controller('notifications')
 @ApiTags('Notifications')

@@ -4,7 +4,7 @@ import { JwtService } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { NotificationsController } from "./controller/notifications.controller";
-import { NotificationsService } from "./services/messages.service";
+import { NotificationsService } from "./services/notifications.service";
 import { NotificationEntity } from "./entities/notifications.model";
 
 import { MessageListener } from "./listeners/messages.listener";

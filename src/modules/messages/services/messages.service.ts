@@ -4,6 +4,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { MessageEntity } from "../entities/messages.model";
+import { EInboxType } from "../interfaces/get-messages.enum";
 
 @Injectable()
 export class MessagesService {
@@ -14,10 +15,13 @@ export class MessagesService {
   )
   { }
 
-  async getUserMessages(user: IUserToken): Promise<MessageEntity[]> {
-    return this.msgRepository.findBy({
-      toUserId: user.userId
-    })
+  async getUserMessages(user: IUserToken, origin: string): Promise<MessageEntity[]> {
+
+    const type = origin == EInboxType.IN
+    ? { toUserId: user.userId }
+    : { fromUserId: user.userId }
+
+    return this.msgRepository.findBy(type)
   }
 
   async createMessage(message: MessageEntity): Promise<IApiMessage> {
