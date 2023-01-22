@@ -1,6 +1,7 @@
 <p align="center">
+  <a href="http://kubide.io/" target="blank"> <img src="https://adalab.es/wp-content/uploads/2022/09/logo_0000s_0036_Kubide.png" width="200" alt="Kubide logo" /></a>
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-  <a href="http://kubide.io/" target="blank"> <img src="https://kubide.es/wp-content/uploads/2016/06/logotipo-blanco-300.png" width="200" alt="Nest Logo" /></a>
+  <a href="http://kubide.io/" target="blank"> <img src="https://kubide.es/wp-content/uploads/2016/06/logotipo-blanco-300.png" width="200" alt="Kubide logo" /></a>
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
@@ -33,7 +34,7 @@
 - `GET` /users/getUserInfo
 - `PATCH` /users/setStatus
 - `PATCH` /users/updateUser
-- `PATCH` /users/changePassword
+- `PUT` /users/changePassword
 
 ## Mensajes
 - `GET` /messages/getMessages
@@ -59,6 +60,10 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+```
+## Docker
+```bash
+docker composer up
 ```
 
 ## Soporte
