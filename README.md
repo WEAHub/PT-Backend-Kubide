@@ -43,6 +43,9 @@
 ## Notificaciones
 - `GET` /notifications/getNotifications
 
+## Postman collection
+- En la <a href="https://github.com/WEAHub/PT-Backend-Kubide/blob/master/postman/Kubide%20Social%20API.postman_collection.json">`carpeta postman`</a> de este repositorio se encuentra la collection para importar
+
 ## Instalación
 
 ```bash
