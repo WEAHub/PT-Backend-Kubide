@@ -8,8 +8,8 @@ import { NotificationEntity } from "@modules/notifications/entities/notification
 @Module({
 	imports: [
 		TypeOrmModule.forRootAsync({	
-      imports: [ConfigModule],					
-      inject: [ConfigService],
+			imports: [ConfigModule],					
+			inject: [ConfigService],
 			useFactory: async (config: ConfigService) => ({
 				type: 'mysql',
 				host: config.get<string>('DATABASE_HOST'),
