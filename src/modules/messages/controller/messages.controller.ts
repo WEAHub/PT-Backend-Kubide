@@ -1,14 +1,23 @@
-import { JwtAuthGuard } from "@modules/auth/guards/jwt-auth.guard";
-import { UsersService } from "@modules/users/services/users.service";
+
 import { Controller, Get, UseGuards, Request, Body, NotAcceptableException, Post, Param } from "@nestjs/common";
 import { EventEmitter2 } from "@nestjs/event-emitter";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 
+import { JwtAuthGuard } from "@modules/auth/guards/jwt-auth.guard";
+
 import { sendMessageDTO } from "../dto/send-message.dto";
-import { MessageEntity } from "../entities/messages.model";
-import { MessagesService } from "../services/messages.service";
-import { NewMessageEvent } from "@modules/notifications/events/new-message.event";
 import { getMessagesDTO } from "../dto/get-messages.dto";
+
+import { MessageEntity } from "../entities/messages.model";
+import { UserEntity } from "@modules/users/entities/user.model";
+
+import { UsersService } from "@modules/users/services/users.service";
+import { MessagesService } from "../services/messages.service";
+
+import { NewMessageEvent } from "@modules/notifications/events/new-message.event";
+
+import { IGetMessagesResponse } from "../interfaces/get-messages.interface";
+import { EApiResponses, IApiMessage } from "@modules/shared/interfaces/IApiMessages.interface";
 
 @Controller('messages')
 @ApiTags('Messages')
@@ -23,13 +32,27 @@ export class MessagesController {
 
   @Get('/getMessages/:type')
   @ApiOperation({ summary: 'Get user messages'})
-  async getMessages(@Request() req, @Param() messageType: getMessagesDTO) {
-    return this.messagesService.getUserMessages(req.user, messageType.type)
+  async getMessages(@Request() req, @Param() messageType: getMessagesDTO): Promise<IGetMessagesResponse[]> {
+    const messages: MessageEntity[] = await this.messagesService.getUserMessages(req.user, messageType.type)
+    
+    const messagesWithEmail = messages.map(async (message: MessageEntity) =>  {
+      const fromUser: UserEntity = await this.usersService.findOneById(message.fromUserId)
+      const toUser: UserEntity = await this.usersService.findOneById(message.toUserId)
+
+      return <IGetMessagesResponse>{
+        ...message,
+        fromUserEmail: fromUser.email,
+        toUserEmail: toUser.email
+      }
+    })
+
+    return await Promise.all(messagesWithEmail)
+
   }
 
   @Post('/sendMessage')
   @ApiOperation({ summary: 'Send message to user'})
-  async sendMessage(@Request() req, @Body() newMessage: sendMessageDTO) {
+  async sendMessage(@Request() req, @Body() newMessage: sendMessageDTO): Promise<IApiMessage> {
     const toUser = await this.usersService.findOneByEmail(newMessage.toUser)
 
     if(!toUser) {
@@ -57,7 +80,7 @@ export class MessagesController {
     this.eventEmitter.emit('message.new', newMessageEvent)
 
     return {
-      message: 'sent!'
+      message: EApiResponses.SENT
     }
   }
 

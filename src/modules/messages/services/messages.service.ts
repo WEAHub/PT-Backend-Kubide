@@ -1,10 +1,11 @@
-import { IUserToken } from "@modules/auth/interfaces/user-session.interface";
-import { IApiMessage } from "@modules/shared/interfaces/IApiMessages.interface";
+
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { MessageEntity } from "../entities/messages.model";
 import { EInboxType } from "../interfaces/get-messages.enum";
+import { IUserToken } from "@modules/auth/interfaces/user-session.interface";
+import { IApiMessage } from "@modules/shared/interfaces/IApiMessages.interface";
 
 @Injectable()
 export class MessagesService {
@@ -24,10 +25,7 @@ export class MessagesService {
     return this.msgRepository.findBy(type)
   }
 
-  async createMessage(message: MessageEntity): Promise<IApiMessage> {
+  async createMessage(message: MessageEntity): Promise<void> {
     this.msgRepository.save(message)
-    return {
-      message: 'Success'
-    }
   }
 }

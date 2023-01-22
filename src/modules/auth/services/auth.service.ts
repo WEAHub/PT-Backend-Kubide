@@ -37,11 +37,7 @@ export class AuthService {
   async login(user: UserEntity): Promise<IUserSession> {
 
     // Cuando el usuario logea ponemos el status online = true?
-    this.usersService.setUserStatus({
-      userId: user.id,
-      email: user.email,
-      username: user.username
-    }, { isOnline: true })
+    this.usersService.setUserStatus(user.id, true)
 
     return {
       username: user.username,

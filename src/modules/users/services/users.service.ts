@@ -3,16 +3,14 @@ import { Injectable, NotAcceptableException } from "@nestjs/common";
 import { InjectRepository,  } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-// Models
 import { UserEntity } from "../entities/user.model";
 
-// Interfaces
 import { IUserToken } from "@modules/auth/interfaces/user-session.interface";
 
-// DTO's
 import { CreateUserDto } from "../dto/create-user.dto";
 import { userStatusDto, userUpdateDataDto } from "../dto/update-user.dto";
-import { IApiMessage } from "@modules/shared/interfaces/IApiMessages.interface";
+import { EApiResponses, IApiMessage } from "@modules/shared/interfaces/IApiMessages.interface";
+import { IActiveUsersResponse } from "../interfaces/get-active-users.interface";
 
 
 @Injectable()
@@ -64,7 +62,7 @@ export class UsersService {
     await this.usersRepository.delete({id: userToken.userId});
   }
 
-  async updateUser(userToken: IUserToken, newUserData: userUpdateDataDto): Promise<IApiMessage> {
+  async updateUser(userToken: IUserToken, newUserData: userUpdateDataDto): Promise<void> {
     const user = await this.usersRepository.findOneBy({ id: userToken.userId })
 
     if(newUserData.email !== user.email) {
@@ -83,28 +81,20 @@ export class UsersService {
 
     this.usersRepository.save(user)
 
-    return {
-      message: 'success'
-    }
 
   }
 
-  async setUserStatus(userToken: IUserToken, status: userStatusDto): Promise<IApiMessage> {
-    const user = await this.usersRepository.findOneBy({ id: userToken.userId })
+  async setUserStatus(id: number, status: boolean): Promise<void> {
+    const user = await this.usersRepository.findOneBy({ id })
 
     this.usersRepository.merge(user, {
-      ...status
+      isOnline: status
     })
 
     this.usersRepository.save(user)
-
-    return {
-      message: 'success'
-    }
-
   }
 
-  async changeUserPassword(userToken: IUserToken, password: string): Promise<IApiMessage>  {
+  async changeUserPassword(userToken: IUserToken, password: string): Promise<void>  {
     const user = await this.usersRepository.findOneBy({ id: userToken.userId })
 
     this.usersRepository.merge(user, {
@@ -112,13 +102,9 @@ export class UsersService {
     })
 
     this.usersRepository.save(user)
-
-    return {
-      message: 'success'
-    }
   }
 
-  async getActiveUsers(): Promise<any[]> {
+  async getActiveUsers(): Promise<IActiveUsersResponse[]> {
     const activeUsers = await this.usersRepository.findBy({ isOnline: true })
     return activeUsers.map(user => {
       const { username, email } = user

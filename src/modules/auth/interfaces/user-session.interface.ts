@@ -5,9 +5,9 @@ interface IUserSession {
 }
 
 interface IUserToken {
-	username: string;
+  username: string;
   email: string
-	userId: number;
+  userId: number;
 }
 
 export {

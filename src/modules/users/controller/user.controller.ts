@@ -1,12 +1,18 @@
-import { JwtAuthGuard } from "@modules/auth/guards/jwt-auth.guard";
-import { AuthService } from "@modules/auth/services/auth.service";
-import { Body, NotAcceptableException, Patch, Request } from "@nestjs/common";
-import { Put } from "@nestjs/common";
-import { Controller, Get, UseGuards } from "@nestjs/common";
+import { Body, NotAcceptableException, Patch, Request, Controller, Get, UseGuards, Put } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { compare } from "bcrypt";
-import { userChangePasswordDto, userStatusDto, userUpdateDataDto } from "../dto/update-user.dto";
+
+import { JwtAuthGuard } from "@modules/auth/guards/jwt-auth.guard";
+
 import { UsersService } from "../services/users.service";
+import { AuthService } from "@modules/auth/services/auth.service";
+
+import { UserEntity } from "../entities/user.model";
+
+import { EApiResponses, IApiMessage } from "@modules/shared/interfaces/IApiMessages.interface";
+import { IActiveUsersResponse } from "../interfaces/get-active-users.interface";
+
+import { userChangePasswordDto, userStatusDto, userUpdateDataDto } from "../dto/update-user.dto";
 
 @Controller('users')
 @ApiTags('User')
@@ -20,31 +26,38 @@ export class UsersController {
 
   @Get('/activeUsers')
   @ApiOperation({ summary: 'Get active users'})
-  async getActiveUsers() {
+  async getActiveUsers(): Promise<IActiveUsersResponse[]> {
     return this.usersService.getActiveUsers();
   }
 
   @Patch('/setStatus')
   @ApiOperation({ summary: 'Set user status (Online/Offline)'})
-  async setUserStatus(@Request() req, @Body() userStatus: userStatusDto) {
-    return this.usersService.setUserStatus(req.user, userStatus)
+  async setUserStatus(@Request() req, @Body() userStatus: userStatusDto): Promise<IApiMessage> {
+    await this.usersService.setUserStatus(req.user.id, userStatus.isOnline)
+    return {
+      message: EApiResponses.SUCCESS
+    }
   }
 
   @Patch('/updateUser')
   @ApiOperation({ summary: 'Update user data'})
-  async updateUserData(@Request() req, @Body() userStatus: userUpdateDataDto) {
-    return this.usersService.updateUser(req.user, userStatus)
+  async updateUserData(@Request() req, @Body() userStatus: userUpdateDataDto): Promise<IApiMessage> {
+    await this.usersService.updateUser(req.user, userStatus)
+    
+    return {
+      message: EApiResponses.SUCCESS
+    }
   }
 
   @Get('/getUserInfo')
   @ApiOperation({ summary: 'Get user information'})
-  async getUserInfo(@Request() req) {
+  async getUserInfo(@Request() req): Promise<UserEntity> {
     return this.usersService.findOneById(req.user.userId)
   }
 
   @Put('/changePassword')
   @ApiOperation({ summary: 'Change user password'})
-  async changePassword(@Request() req, @Body() userChangePassword: userChangePasswordDto) {
+  async changePassword(@Request() req, @Body() userChangePassword: userChangePasswordDto): Promise<IApiMessage> {
 
     const user = await this.usersService.findOneById(req.user.userId)
     const passwordValid = await compare(userChangePassword.oldPassword, user.password)
@@ -54,8 +67,12 @@ export class UsersController {
     }
 
     const hashedPassword = await this.authService.hashPassword(userChangePassword.newPassword)
+    await this.usersService.changeUserPassword(req.user, hashedPassword)
+    
 
-    return this.usersService.changeUserPassword(req.user, hashedPassword)
+    return {
+      message: EApiResponses.SUCCESS
+    }
 
   }
 }
