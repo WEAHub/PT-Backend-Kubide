@@ -30,10 +30,10 @@
  - `POST` /auth/signup
 
 ## Usuarios
+- `GET` /users/profile
 - `GET` /users/activeUsers
-- `GET` /users/getUserInfo
-- `PATCH` /users/setStatus
-- `PATCH` /users/updateUser
+- `GET` /users?active=true|false
+- `PATCH` /users
 - `PUT` /users/changePassword
 
 ## Mensajes

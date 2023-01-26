@@ -1,17 +1,19 @@
 import { ApiProperty } from "@nestjs/swagger"
+import { Type } from "class-transformer"
 import { IsBoolean, IsNotEmpty, IsString } from "class-validator"
 
 class userStatusDto {
 	@IsNotEmpty()
 	@IsBoolean()
+  @Type(() => Boolean)
   @ApiProperty({ 
     description: 
     'Online status of the user', 
-    example: 'false', 
+    example: false, 
     type: Boolean,
     required: true
   })
-  isOnline: boolean
+  active: boolean
 }
 
 class userUpdateDataDto {

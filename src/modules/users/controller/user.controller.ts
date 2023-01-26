@@ -1,4 +1,4 @@
-import { Body, NotAcceptableException, Patch, Request, Controller, Get, UseGuards, Put } from "@nestjs/common";
+import { Body, NotAcceptableException, Patch, Request, Controller, Get, UseGuards, Put, Query } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { compare } from "bcrypt";
 
@@ -30,16 +30,16 @@ export class UsersController {
     return this.usersService.getActiveUsers();
   }
 
-  @Patch('/setStatus')
+  @Get()
   @ApiOperation({ summary: 'Set user status (Online/Offline)'})
-  async setUserStatus(@Request() req, @Body() userStatus: userStatusDto): Promise<IApiMessage> {
-    await this.usersService.setUserStatus(req.user.id, userStatus.isOnline)
+  async setUserStatus(@Request() req, @Query() queryParams: userStatusDto): Promise<IApiMessage> {
+    await this.usersService.setUserStatus(req.user.userId, queryParams.active)
     return {
       message: EApiResponses.SUCCESS
     }
   }
 
-  @Patch('/updateUser')
+  @Patch()
   @ApiOperation({ summary: 'Update user data'})
   async updateUserData(@Request() req, @Body() userStatus: userUpdateDataDto): Promise<IApiMessage> {
     await this.usersService.updateUser(req.user, userStatus)
@@ -49,7 +49,7 @@ export class UsersController {
     }
   }
 
-  @Get('/getUserInfo')
+  @Get('/profile')
   @ApiOperation({ summary: 'Get user information'})
   async getUserInfo(@Request() req): Promise<UserEntity> {
     return this.usersService.findOneById(req.user.userId)

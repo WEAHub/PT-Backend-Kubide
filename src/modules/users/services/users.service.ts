@@ -86,7 +86,7 @@ export class UsersService {
 
   async setUserStatus(id: number, status: boolean): Promise<void> {
     const user = await this.usersRepository.findOneBy({ id })
-
+    console.log(user, status)
     this.usersRepository.merge(user, {
       isOnline: status
     })
